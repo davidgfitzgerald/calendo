@@ -2,18 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './components/App/App';
-import Clock from './components/Clock'
-import Toggle from './components/Toggle'
 import reportWebVitals from './misc/reportWebVitals';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-  <App>
-    <Clock/>
-    <Toggle/>
-  </App>
+    <App/>
   </React.StrictMode>
 );
 
