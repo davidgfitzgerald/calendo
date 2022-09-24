@@ -8,6 +8,8 @@
 - [CSS Pseudo Selectors](#css-pseudo-selectors)
   - [Pseudo Elements](#pseudo-elements)
   - [Pseudo Classes](#pseudo-classes)
+- [CSS Filter Property](#css-filter-property)
+- [RegEx](#regex)
 
 # CSS Events
 
@@ -162,3 +164,33 @@ selector::pseudo-element {
 | :target	 | #news:target	| Selects the current active #news element (clicked on a URL containing that anchor name)
 | :valid	 | input:valid	| Selects all \<input> elements with a valid value
 | :visited	 | a:visited	| Selects all visited links
+
+# CSS Filter Property
+
+```css
+transition: filter 300ms; /* when hovering */
+
+filter: none;
+filter: blur(5px);
+filter: brightness(200%);
+filter: contrast(200%);
+filter: drop-shadow(8px 8px 10px gray);
+filter: grayscale(100%);
+filter: hue-rotate(90deg);
+filter: invert(100%);
+filter: opacity(30%);
+filter: saturate(8);
+filter: sepia(100%);
+filter: contrast(200%) brightness(150%);
+```
+
+# RegEx
+
+- Make words lowercase
+```regexp
+Find:
+([A-Z][\w]+)
+
+Replace:
+\l$1
+```
