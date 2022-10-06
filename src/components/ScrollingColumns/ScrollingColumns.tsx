@@ -1,6 +1,4 @@
-// @ts-nocheck - temporary
-
-import React, { Component } from 'react'
+import React, { Component, PropsWithChildren } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import './scrollingColumns.css';
 
@@ -44,7 +42,7 @@ let toDoData = [
   {"title": "Worship satan."},
 ]
 
-function App(props) {
+function App() {
   return (
     <div className="App">
       <ScrollColumnContainer>
@@ -63,7 +61,11 @@ function App(props) {
   );
 }
 
-class TimeSlot extends Component {
+interface TimeSlotProps {
+  time: string
+}
+
+class TimeSlot extends Component<TimeSlotProps> {
   render() {
     return (
       <li className='time-slot'>
@@ -73,7 +75,11 @@ class TimeSlot extends Component {
   }
 }
 
-class ToDo extends Component {
+interface ToDoProps {
+  title: string
+}
+
+class ToDo extends Component<ToDoProps> {
   render() {
     return (
       <li className='to-do'>
@@ -83,8 +89,10 @@ class ToDo extends Component {
   }
 }
 
+interface ScrollColumnContainerProps extends PropsWithChildren {}
 
-class ScrollColumnContainer extends Component {
+
+class ScrollColumnContainer extends Component<ScrollColumnContainerProps> {
   render() {
     return (
       <div className='scroll-column-container'>
@@ -94,35 +102,42 @@ class ScrollColumnContainer extends Component {
   }
 }
 
-class ScrollColumn extends Component {
-  constructor(props) {
+interface ScrollColumnProps extends PropsWithChildren {
+  startingHeight: number
+}
+
+interface ScrollColumnState {
+  throttle: boolean
+  height: number
+}
+
+class ScrollColumn extends Component<ScrollColumnProps, ScrollColumnState> {
+  constructor(props: ScrollColumnProps) {
     super(props)
 
     this.state = {
-      scrollAmount: null,
       throttle: false,
       height: this.props.startingHeight
     }
     
     this.handleScroll = this.handleScroll.bind(this)
   }
-  
-  handleScroll(event) {
 
+  handleScroll(event: React.UIEvent<HTMLDivElement, UIEvent>) {
     if (!this.state.throttle) {
       this.setState({
         throttle: true,
-        height: event.target.scrollTop + (event.target.scrollHeight - event.target.clientHeight)
+        height: event.currentTarget.scrollTop + (event.currentTarget.scrollHeight - event.currentTarget.clientHeight)
       });
       setTimeout(() => {
         this.setState({ throttle: false })
-      }, "30")
+      }, 30)
     }
   }
 
   render() {
     return (
-      <div className='scroll-column' onScroll={this.state.throttle ? null : this.handleScroll} style={{ height: this.state.height }}>
+      <div className='scroll-column' onScroll={this.state.throttle ? undefined : this.handleScroll} style={{ height: this.state.height }}>
         {this.props.children}
       </div>
     )
