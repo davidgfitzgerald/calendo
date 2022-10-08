@@ -10,6 +10,8 @@
   - [Pseudo Classes](#pseudo-classes)
 - [CSS Filter Property](#css-filter-property)
 - [RegEx](#regex)
+- [React Testing Library](#react-testing-library)
+- [ARIA Elements & Roles](#aria-elements--roles)
 
 # CSS Events
 
@@ -194,3 +196,15 @@ Find:
 Replace:
 \l$1
 ```
+
+# React Testing Library
+
+```javascript
+screen.debug()
+screen.logTestingPlaygroundURL()
+```
+
+# ARIA Elements & Roles
+
+URL: https://www.w3.org/TR/html-aria/#docconformance
+
