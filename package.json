@@ -18,6 +18,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run --browser chrome",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
