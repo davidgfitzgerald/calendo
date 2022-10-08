@@ -73,5 +73,12 @@ code {
   list-style: none;
   width:100%;
   border-bottom: 1px solid black;
-  padding:1vw
+  padding:1vw;
+}
+
+.to-do:hover {
+  filter: brightness(1.2);
+  transform: scale(1.10);
+  translate: 5%;
+  transition: all 0.1s ease-in-out;
 }
