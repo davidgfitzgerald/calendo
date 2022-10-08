@@ -87,7 +87,7 @@ interface ToDoState {
   startedDragging: boolean;
 }
 
-class ToDo extends Component<ToDoProps, ToDoState> {
+export class ToDo extends Component<ToDoProps, ToDoState> {
   constructor(props: ToDoProps) {
     super(props)
 
@@ -138,7 +138,7 @@ class ToDo extends Component<ToDoProps, ToDoState> {
 interface ScrollColumnContainerProps extends PropsWithChildren { }
 
 
-class ScrollColumnContainer extends Component<ScrollColumnContainerProps> {
+export class ScrollColumnContainer extends Component<ScrollColumnContainerProps> {
   render() {
     return (
       <div className='scroll-column-container'>
@@ -159,7 +159,7 @@ interface ScrollColumnState {
   elements: Array<React.ReactNode>
 }
 
-class ScrollColumn extends Component<ScrollColumnProps, ScrollColumnState> {
+export class ScrollColumn extends Component<ScrollColumnProps, ScrollColumnState> {
   constructor(props: ScrollColumnProps) {
     super(props)
 
@@ -172,7 +172,7 @@ class ScrollColumn extends Component<ScrollColumnProps, ScrollColumnState> {
     this.handleScroll = this.handleScroll.bind(this)
   }
 
-  handleScroll(event: React.UIEvent<HTMLDivElement, UIEvent>) {
+  handleScroll(event: React.UIEvent<HTMLUListElement, UIEvent>) {
     if (!this.state.throttle) {
       this.setState({
         throttle: true,
@@ -187,9 +187,9 @@ class ScrollColumn extends Component<ScrollColumnProps, ScrollColumnState> {
   render() {
 
     return (
-      <div className='scroll-column' onScroll={this.state.throttle ? undefined : this.handleScroll} style={{ height: this.state.height }}>
+      <ul className='scroll-column' onScroll={this.state.throttle ? undefined : this.handleScroll} style={{ height: this.state.height }}>
         {this.state.elements}
-      </div>
+      </ul>
     )
   }
 }
