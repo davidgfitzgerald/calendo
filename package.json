@@ -19,6 +19,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -44,6 +45,7 @@
     "@types/react-transition-group": "^4.4.5",
     "@types/uuid": "^8.3.4",
     "@svgr/webpack": "^6.5.1",
+    "cypress": "^10.9.0",
     "react-scripts": "^5.0.1"
   },
   "overrides": {
