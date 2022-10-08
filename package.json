@@ -41,6 +41,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/cypress": "^8.0.3",
     "@testing-library/user-event": "^14.4.3",
     "@types/react-transition-group": "^4.4.5",
     "@types/uuid": "^8.3.4",
