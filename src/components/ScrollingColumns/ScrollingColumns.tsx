@@ -1,4 +1,4 @@
-import React, { Component, PropsWithChildren } from 'react'
+import React, { Component, DetailedHTMLProps, DragEventHandler, LiHTMLAttributes, PropsWithChildren, DragEvent, EventHandler } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import './scrollingColumns.css';
 
@@ -42,22 +42,31 @@ let toDoData = [
   { "title": "Worship satan." },
 ]
 
+/**
+ * Mutate `arr` by moving the item at `startIndex` to `endIndex`.
+ * 
+ * @param startIndex - The index of the item to drag
+ * @param endIndex - The index to drop the item
+ * @param arr - The array to mutate
+ */
+function moveItem(startIndex: number, endIndex: number, arr: Array<any>) {
+  const draggedElement = arr.splice(startIndex, 1)[0];
+  arr.splice(endIndex, 0, draggedElement);
+}
+
 function App() {
+
   return (
     <div className="App">
       <ScrollColumnContainer>
-        <ScrollColumn
+        {/* <ScrollColumn
           startingHeight={270}
-          elements={calendarData.map((item, index) => {
-            return <TimeSlot time={item.time} key={uuidv4()} />
-          })}>
+          data={calendarData}>
 
-        </ScrollColumn>
+        </ScrollColumn> */}
         <ScrollColumn
           startingHeight={270}
-          elements={toDoData.map((item, index) => {
-            return <ToDo title={item.title} key={uuidv4()} index={index} />
-          })}>
+          todos={toDoData}>
         </ScrollColumn>
       </ScrollColumnContainer>
     </div>
@@ -78,9 +87,16 @@ class TimeSlot extends Component<TimeSlotProps> {
   }
 }
 
+interface ToDoObject {
+  title: string
+}
+
 interface ToDoProps {
   title: string
   index: number
+  onDragStart: DragEventHandler<HTMLLIElement>
+  onDragOver: DragEventHandler<HTMLLIElement>
+  onDrop: DragEventHandler<HTMLLIElement>
 }
 
 interface ToDoState {
@@ -88,47 +104,14 @@ interface ToDoState {
 }
 
 export class ToDo extends Component<ToDoProps, ToDoState> {
-  constructor(props: ToDoProps) {
-    super(props)
-
-    this.state = {
-      startedDragging: false
-    }
-
-    this.handleDragEnter = this.handleDragEnter.bind(this)
-    this.handleDragStart = this.handleDragStart.bind(this)
-    this.handleDragLeave = this.handleDragLeave.bind(this)
-  }
-
-  handleDragEnter() {
-    if (!this.state.startedDragging) {
-      console.log(`Entered ${this.props.index}`)
-    }
-  }
-
-  handleDragLeave() {
-    console.log(`Left ${this.props.index}`)
-    if (this.state.startedDragging) {
-
-      this.setState({
-        startedDragging: false
-      })
-    }
-  }
-
-  handleDragStart() {
-    console.log(`Started dragging ${this.props.index}`)
-    this.setState({
-      startedDragging: true
-    })
-  }
-
   render() {
     return (
       <li
         className='to-do' draggable={true}
-        onDragEnter={this.handleDragEnter} onDragStart={this.handleDragStart}
-        onDragLeave={this.handleDragLeave}>
+        onDragStart={this.props.onDragStart}
+        onDragOver={this.props.onDragOver}
+        onDropCapture={this.props.onDrop}
+      >
         {this.props.title}
       </li>
     )
@@ -150,13 +133,13 @@ export class ScrollColumnContainer extends Component<ScrollColumnContainerProps>
 
 interface ScrollColumnProps extends PropsWithChildren {
   startingHeight: number
-  elements: Array<React.ReactNode>
+  todos: Array<ToDoObject>
 }
 
 interface ScrollColumnState {
   throttle: boolean
   height: number
-  elements: Array<React.ReactNode>
+  todos: Array<ToDoObject>
 }
 
 export class ScrollColumn extends Component<ScrollColumnProps, ScrollColumnState> {
@@ -166,11 +149,34 @@ export class ScrollColumn extends Component<ScrollColumnProps, ScrollColumnState
     this.state = {
       throttle: false,
       height: this.props.startingHeight,
-      elements: this.props.elements
+      todos: this.props.todos
     }
 
     this.handleScroll = this.handleScroll.bind(this)
+    this.onDragStart = this.onDragStart.bind(this)
+    this.onDragOver = this.onDragOver.bind(this)
+    this.onDrop = this.onDrop.bind(this)
   }
+
+  onDragStart(event: DragEvent<HTMLLIElement>, index: number) {
+    event.dataTransfer.setData("startIndex", index.toString())
+  }
+
+  onDragOver(event: DragEvent<HTMLLIElement>, index: number) {
+    event.preventDefault();
+  }
+  
+  onDrop(event: DragEvent<HTMLLIElement>, endIndex: number) {
+    const startIndex = parseInt(event.dataTransfer.getData("startIndex"))
+    
+    // Update the state with the dropped element
+    moveItem(startIndex, endIndex, this.state.todos);
+
+    this.setState({
+      todos: this.state.todos
+    })
+  }
+
 
   handleScroll(event: React.UIEvent<HTMLUListElement, UIEvent>) {
     if (!this.state.throttle) {
@@ -185,10 +191,20 @@ export class ScrollColumn extends Component<ScrollColumnProps, ScrollColumnState
   }
 
   render() {
+    const elements = this.state.todos.map((item, index) => {
+      return <ToDo
+        title={item.title}
+        key={uuidv4()}
+        index={index}
+        onDragStart={(event) => this.onDragStart(event, index)}
+        onDragOver={(event) => this.onDragOver(event, index)}
+        onDrop={(event) => this.onDrop(event, index)}
+      />
+    })
 
     return (
       <ul className='scroll-column' onScroll={this.state.throttle ? undefined : this.handleScroll} style={{ height: this.state.height }}>
-        {this.state.elements}
+        {elements}
       </ul>
     )
   }
