@@ -20,7 +20,7 @@ interface AppState {
   menuHeight?: number;
 }
 
-class App extends Component<AppProps, AppState> {
+class NavBar extends Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props)
     this.state = {
@@ -192,4 +192,4 @@ class DropDownItem extends Component<DropDownItemProps> {
 }
 
 
-export default App;
+export default NavBar;
