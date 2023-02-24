@@ -11,12 +11,12 @@ function moveItem(startIndex: number, endIndex: number, arr: Array<any>) {
 }
 
 
-interface ItemsProps {
+interface ItemListProps {
     items: Array<String>
 }
 
 
-export function App(props: ItemsProps) {
+export function App(props: ItemListProps) {
     const style = {
         padding: 50,
         fontSize: 100
@@ -24,13 +24,13 @@ export function App(props: ItemsProps) {
     return (
         <div className="app">
             <div style={style}>Hello, World!</div>
-            <Items items={props.items} />
+            <ItemList items={props.items} />
         </div>
     )
 }
 
 
-export function Items(props: ItemsProps) {
+export function ItemList(props: ItemListProps) {
     const style = {
         listStyle: "none"
     }
