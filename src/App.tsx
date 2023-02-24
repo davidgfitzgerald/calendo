@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 /**
  * Mutate `arr` by moving the item at `startIndex` to `endIndex`.
  * 
@@ -34,6 +36,13 @@ export function ItemList(props: ItemListProps) {
     const style = {
         listStyle: "none"
     }
+
+    const [items, setItems] = useState (props.items)
+
+    // this.handleScroll = this.handleScroll.bind(this)
+    // this.onDragStart = this.onDragStart.bind(this)
+    // this.onDragOver = this.onDragOver.bind(this)
+    // this.onDrop = this.onDrop.bind(this)
     return (
         <ul style={style}>
             {props.items.map((item) => <Item item={item} />)}
