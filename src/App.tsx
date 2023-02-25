@@ -37,7 +37,23 @@ export function ItemList(props: ItemListProps) {
         listStyle: "none"
     }
 
-    const [items, setItems] = useState (props.items)
+    const [items, setItems] = useState(props.items)
+
+    function onDragStart(event: React.DragEvent<HTMLLIElement>, index: number) {
+        event.dataTransfer.setData("startIndex", index.toString())
+    }
+
+    function onDragOver(event: React.DragEvent<HTMLLIElement>, index: number) {
+        event.preventDefault();
+    }
+
+    function onDrop(event: React.DragEvent<HTMLLIElement>, endIndex: number) {
+        const startIndex = parseInt(event.dataTransfer.getData("startIndex"))
+
+        // Update the state with the dropped element
+        moveItem(startIndex, endIndex, items);
+        setItems(items)
+    }
 
     // this.handleScroll = this.handleScroll.bind(this)
     // this.onDragStart = this.onDragStart.bind(this)
@@ -69,7 +85,7 @@ export function Item(props: ItemProps) {
     return (
         <li style={liStyle}>
             <div style={divStyle}>
-            {props.item}
+                {props.item}
             </div>
         </li>
     )
