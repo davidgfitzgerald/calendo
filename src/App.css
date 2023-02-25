@@ -49,3 +49,7 @@
 .dnd-item:not(:last-of-type) {
     margin-bottom: 1rem;
 }
+
+.dragging {
+    background-color:  hsl(220, 13%, 18%);
+}

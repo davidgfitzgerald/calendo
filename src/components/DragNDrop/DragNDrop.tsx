@@ -1,4 +1,4 @@
-import { DragNDropProps, dragStartParams as DragItem } from "./types";
+import { DragNDropProps, dragStartParams as ItemCoords } from "./types";
 import * as React from 'react';
 import { useRef, useState } from 'react';
 
@@ -6,12 +6,26 @@ import { useRef, useState } from 'react';
 function DragNDrop({ data }: DragNDropProps) {
     const [items, setItems] = useState(data);
     const [dragging, setDragging] = useState(false);
-    const dragItem = useRef<DragItem>();
+    const dragItem = useRef<ItemCoords>();
 
-    function onDragStart(event: React.DragEvent, params: DragItem) {
+    function onDragStart(event: React.DragEvent, params: ItemCoords) {
         console.log(`Drag started on (${params.groupIndex}, ${params.itemIndex})`)
         dragItem.current = params
         setDragging(true)
+    }
+
+    function setClassName(params: ItemCoords) {
+        let className = "dnd-item"
+        const current = dragItem.current
+        const isDragItem = (): boolean => {
+            return current !== undefined && current.groupIndex == params.groupIndex && current.itemIndex == params.itemIndex
+        }
+
+        if (dragging && isDragItem()) {
+            className += " dragging"
+        }
+
+        return className
     }
 
     return (
@@ -21,7 +35,7 @@ function DragNDrop({ data }: DragNDropProps) {
                     <div className="dnd-group-title">{group.title}</div>
                     {group.items.map((item, itemIndex) => (
                         <div
-                            className="dnd-item"
+                            className={setClassName({ groupIndex, itemIndex })}
                             onDragStart={(event) => { onDragStart(event, { groupIndex, itemIndex }) }}
                             draggable
                             key={item}
