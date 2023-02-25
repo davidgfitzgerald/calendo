@@ -12,6 +12,8 @@ Watched this video [Drag And Drop With React Hooks From Scratch](https://www.you
 - Uses `<div className="drag-n-drop">` to hold multiple `<div className="dnd-group">` containers
 - Within the `"dnd-group"` live the `"dnd-items"`
 - Takes an arbitrary number of groups and then an arbitrary number of items
+- Implemented the whole video up to 52mins
+- [ ] Complete the video from 52mins
 
 Read some of this article [5 React Design Patterns You Should Know](https://javascript.plainenglish.io/5-react-design-patterns-you-should-know-629030e2e2c7)
 - The higher-order component pattern seems very useful for composing components, very similar to a decorator wrapping a function.

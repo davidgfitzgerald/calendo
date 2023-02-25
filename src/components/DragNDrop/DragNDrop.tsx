@@ -9,8 +9,8 @@ function DragNDrop({ data }: DragNDropProps) {
     const dragItem = useRef<ItemCoords>();
     const dragNode = useRef<EventTarget>();
 
-    const isDragItem = (params: ItemCoords): boolean => {
-        return dragItem.current !== undefined && dragItem.current.groupIndex == params.groupIndex && dragItem.current.itemIndex == params.itemIndex
+    const isDragItem = (item: ItemCoords): boolean => {
+        return dragItem.current !== undefined && dragItem.current.groupIndex == item.groupIndex && dragItem.current.itemIndex == item.itemIndex
     }
 
     function onDragStart(event: React.DragEvent, item: ItemCoords) {
@@ -25,6 +25,25 @@ function DragNDrop({ data }: DragNDropProps) {
             setDragging(true)
         }, 0)
     }
+    
+    function onDragEnter(event: React.DragEvent, item: ItemCoords) {
+        event.preventDefault()  // TODO what does this does? Is it needed?
+        console.log(`Drag enter on (${item.groupIndex}, ${item.itemIndex})`)
+        
+        const currentItem = dragItem.current
+        if (dragNode.current !== event.target) {
+            setItems(oldItems => {
+                if (currentItem === undefined) {
+                    throw Error("Failed to set new items since dragItem is undefined")
+                }
+                let newItems = JSON.parse(JSON.stringify(oldItems))
+                const removedItem = newItems[currentItem.groupIndex].items.splice(currentItem.itemIndex, 1)[0]
+                newItems[item.groupIndex].items.splice(item.itemIndex, 0, removedItem)
+                dragItem.current = item
+                return newItems
+            })
+        }
+    }
 
     function onDragEnd(event: Event): void {
         if (dragItem.current === undefined) {
@@ -34,7 +53,7 @@ function DragNDrop({ data }: DragNDropProps) {
             throw Error("Ending drag but no dragNode is defined")
         }
         
-        console.log("Ending drag")
+        console.log("Ending drag.")
         dragNode.current.removeEventListener("dragend", onDragEnd)
         dragItem.current = undefined;
         dragNode.current = undefined;
@@ -61,6 +80,7 @@ function DragNDrop({ data }: DragNDropProps) {
                         <div
                             className={setClassName({ groupIndex, itemIndex })}
                             onDragStart={(event) => { onDragStart(event, { groupIndex, itemIndex }) }}
+                            onDragEnter={dragging ? (event) => {onDragEnter(event, {groupIndex, itemIndex})} : undefined}
                             draggable
                             key={item}
                         >
