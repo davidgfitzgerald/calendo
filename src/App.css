@@ -1,3 +1,54 @@
-.dragging {
-    background-color: "red";
+.App {
+    text-align: center;
+}
+
+.App-header {
+    background-color: hsl(220, 13%, 18%);
+    min-height: 100vh;
+    display: flex;
+    color: white;
+}
+
+.drag-n-drop {
+    padding: 1rem;
+    display: grid;
+    gap: 1rem;
+    width: calc(100% - 3rem);  /* TODO remove need for this calc */
+    height: 100%;
+    /* grid-template-columns: repeat(auto-fill, 300px); */
+    align-items: start;
+    grid-template-columns: 50% 50%;
+}
+
+.dnd-group {
+    padding: 1rem;
+    background-color: hsl(220, 13%, 30%);
+    border-radius: 5px;
+}
+
+.dnd-group-title {
+    text-align: left;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+.dnd-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 10rem;
+    background-color: white;
+    color: hsl(220, 13%, 18%);
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.dnd-item * {
+    /* Remove margin from any tag nested in dnd-item */
+    margin: 0px;
+    font-size: 1.5rem;
+}
+
+.dnd-item:not(:last-of-type) {
+    margin-bottom: 1rem;
 }
