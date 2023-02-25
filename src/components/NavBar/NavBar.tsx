@@ -10,6 +10,7 @@ import { ReactComponent as PlusIcon } from '../../svg/fireship/plus.svg'
 
 import { CSSTransition } from 'react-transition-group';
 import { JsxElement } from 'typescript'
+import './NavBar.css'
 
 interface AppProps {
 
