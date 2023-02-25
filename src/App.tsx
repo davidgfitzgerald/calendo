@@ -1,5 +1,5 @@
 import './App.css'
-
+import DragNDrop from './components/DragNDrop/DragNDrop'
 
 const data = [
     { "title": "Group 1", "items": ["Item 1", "Item 2", "Item 3"] },
@@ -10,20 +10,7 @@ const data = [
 export function App() {
     return (
         <div className="App">
-            <header className="App-header">
-                <div className="drag-n-drop">
-                    {data.map((group, groupIndex) => (
-                        <div key={group.title} className="dnd-group">
-                            <div className="dnd-group-title">{group.title}</div>
-                            {group.items.map((item, itemIndex) => (
-                                <div draggable key={item} className="dnd-item">
-                                    <div>{item}</div>
-                                </div>
-                            ))}
-                        </div>
-                    ))}
-                </div>
-            </header>
+            <DragNDrop data={data}/>
         </div>
     )
 }

@@ -1,8 +1,5 @@
 .App {
     text-align: center;
-}
-
-.App-header {
     background-color: hsl(220, 13%, 18%);
     min-height: 100vh;
     display: flex;
