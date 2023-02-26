@@ -10,7 +10,7 @@ function DragNDrop({ data }: DragNDropProps) {
     const dragNode = useRef<EventTarget>();
 
     const isDragItem = (item: ItemCoords): boolean => {
-        return dragItem.current !== undefined && dragItem.current.groupIndex == item.groupIndex && dragItem.current.itemIndex == item.itemIndex
+        return dragItem.current !== undefined && dragItem.current.groupIndex === item.groupIndex && dragItem.current.itemIndex === item.itemIndex
     }
 
     function onDragStart(event: React.DragEvent, item: ItemCoords) {
@@ -25,11 +25,11 @@ function DragNDrop({ data }: DragNDropProps) {
             setDragging(true)
         }, 0)
     }
-    
+
     function onDragEnter(event: React.DragEvent, item: ItemCoords) {
         event.preventDefault()  // TODO what does this does? Is it needed?
         console.log(`Drag enter on (${item.groupIndex}, ${item.itemIndex})`)
-        
+
         const currentItem = dragItem.current
         if (dragNode.current !== event.target) {
             setItems(oldItems => {
@@ -52,7 +52,7 @@ function DragNDrop({ data }: DragNDropProps) {
         if (dragNode.current === undefined) {
             throw Error("Ending drag but no dragNode is defined")
         }
-        
+
         console.log("Ending drag.")
         dragNode.current.removeEventListener("dragend", onDragEnd)
         dragItem.current = undefined;
@@ -60,27 +60,28 @@ function DragNDrop({ data }: DragNDropProps) {
         setDragging(false)
     }
 
-    function setClassName(item: ItemCoords) {
+    function getClassName(item: ItemCoords) {
         let className = "dnd-item"
-
-
         if (dragging && isDragItem(item)) {
             className += " dragging"
         }
-
         return className
     }
 
     return (
         <div className="drag-n-drop">
             {items.map((group, groupIndex) => (
-                <div key={group.title} className="dnd-group">
+                <div
+                    key={group.title}
+                    className="dnd-group"
+                    onDragEnter={dragging && !group.items.length ? (event) => { onDragEnter(event, { groupIndex, itemIndex: 0 }) } : undefined}
+                >
                     <div className="dnd-group-title">{group.title}</div>
                     {group.items.map((item, itemIndex) => (
                         <div
-                            className={setClassName({ groupIndex, itemIndex })}
+                            className={getClassName({ groupIndex, itemIndex })}
                             onDragStart={(event) => { onDragStart(event, { groupIndex, itemIndex }) }}
-                            onDragEnter={dragging ? (event) => {onDragEnter(event, {groupIndex, itemIndex})} : undefined}
+                            onDragEnter={dragging ? (event) => { onDragEnter(event, { groupIndex, itemIndex }) } : undefined}
                             draggable
                             key={item}
                         >
