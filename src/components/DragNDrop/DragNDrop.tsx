@@ -10,7 +10,10 @@ function DragNDrop({ data }: DragNDropProps) {
     const dragNode = useRef<EventTarget>();
 
     const isDragItem = (item: ItemCoords): boolean => {
-        return dragItem.current !== undefined && dragItem.current.groupIndex === item.groupIndex && dragItem.current.itemIndex === item.itemIndex
+        return (
+            dragItem.current?.groupIndex === item.groupIndex && 
+            dragItem.current?.itemIndex === item.itemIndex
+        )
     }
 
     function onDragStart(event: React.DragEvent, item: ItemCoords) {
@@ -18,16 +21,15 @@ function DragNDrop({ data }: DragNDropProps) {
         dragItem.current = item
         dragNode.current = event.target
         dragNode.current.addEventListener("dragend", onDragEnd)
-        setTimeout(() => {
-            // Using setTimeout means the re-render is after  
+        requestAnimationFrame(() => {
+            // Using requestAnimationFrame means the re-render is after  
             // the drag start.This means the drag ghost is 
             // the current item and not the blanked out item.
             setDragging(true)
-        }, 0)
+        })
     }
 
     function onDragEnter(event: React.DragEvent, item: ItemCoords) {
-        event.preventDefault()  // TODO what does this does? Is it needed?
         console.log(`Drag enter on (${item.groupIndex}, ${item.itemIndex})`)
 
         const currentItem = dragItem.current
@@ -61,11 +63,7 @@ function DragNDrop({ data }: DragNDropProps) {
     }
 
     function getClassName(item: ItemCoords) {
-        let className = "dnd-item"
-        if (dragging && isDragItem(item)) {
-            className += " dragging"
-        }
-        return className
+        return `dnd-item ${dragging && isDragItem(item) ? "dragging" : ""}`;
     }
 
     return (
