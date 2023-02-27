@@ -1,6 +1,7 @@
-import { DragNDropProps, dragStartParams as ItemCoords } from "./types";
+import { DragNDropProps, ItemCoords } from "./types";
 import * as React from 'react';
 import { useRef, useState } from 'react';
+import './DragNDrop.css'
 
 
 function DragNDrop({ data }: DragNDropProps) {
@@ -11,7 +12,7 @@ function DragNDrop({ data }: DragNDropProps) {
 
     const isDragItem = (item: ItemCoords): boolean => {
         return (
-            dragItem.current?.groupIndex === item.groupIndex && 
+            dragItem.current?.groupIndex === item.groupIndex &&
             dragItem.current?.itemIndex === item.itemIndex
         )
     }
@@ -62,22 +63,18 @@ function DragNDrop({ data }: DragNDropProps) {
         setDragging(false)
     }
 
-    function getClassName(item: ItemCoords) {
-        return `dnd-item ${dragging && isDragItem(item) ? "dragging" : ""}`;
-    }
-
     return (
         <div className="drag-n-drop">
             {items.map((group, groupIndex) => (
                 <div
                     key={group.title}
                     className="dnd-group"
-                    onDragEnter={dragging && !group.items.length ? (event) => { onDragEnter(event, { groupIndex, itemIndex: 0 }) } : undefined}
+                    // onDragEnter={dragging && !group.items.length ? (event) => { onDragEnter(event, { groupIndex, itemIndex: 0 }) } : undefined}
                 >
                     <div className="dnd-group-title">{group.title}</div>
                     {group.items.map((item, itemIndex) => (
                         <div
-                            className={getClassName({ groupIndex, itemIndex })}
+                            className={`dnd-item ${dragging && isDragItem({ groupIndex, itemIndex }) ? "dragging" : ""}`}
                             onDragStart={(event) => { onDragStart(event, { groupIndex, itemIndex }) }}
                             onDragEnter={dragging ? (event) => { onDragEnter(event, { groupIndex, itemIndex }) } : undefined}
                             draggable
@@ -86,6 +83,14 @@ function DragNDrop({ data }: DragNDropProps) {
                             <div>{item}</div>
                         </div>
                     ))}
+                    {dragging && !group.items.length ?
+                        <div
+                            className="dnd-space-below-group"
+                            onDragEnter={dragging && !group.items.length ? (event) => { onDragEnter(event, { groupIndex, itemIndex: 0 }) } : undefined}
+
+                        ></div>
+                        : undefined
+                    }
                 </div>
             ))}
         </div>

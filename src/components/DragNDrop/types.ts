@@ -13,7 +13,7 @@ export interface DragNDropProps extends PropsWithChildren {
 }
 
 
-export interface dragStartParams {
+export interface ItemCoords {
     groupIndex: number; 
     itemIndex: number; 
 }
