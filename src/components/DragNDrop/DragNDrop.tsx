@@ -69,7 +69,6 @@ function DragNDrop({ data }: DragNDropProps) {
                 <div
                     key={group.title}
                     className="dnd-group"
-                    // onDragEnter={dragging && !group.items.length ? (event) => { onDragEnter(event, { groupIndex, itemIndex: 0 }) } : undefined}
                 >
                     <div className="dnd-group-title">{group.title}</div>
                     {group.items.map((item, itemIndex) => (
