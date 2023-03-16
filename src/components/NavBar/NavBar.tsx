@@ -10,6 +10,7 @@ import { ReactComponent as PlusIcon } from '../../svg/fireship/plus.svg'
 
 import { CSSTransition } from 'react-transition-group';
 import { JsxElement } from 'typescript'
+import './NavBar.css'
 
 interface AppProps {
 
@@ -20,7 +21,7 @@ interface AppState {
   menuHeight?: number;
 }
 
-class App extends Component<AppProps, AppState> {
+class NavBar extends Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props)
     this.state = {
@@ -192,4 +193,4 @@ class DropDownItem extends Component<DropDownItemProps> {
 }
 
 
-export default App;
+export default NavBar;

@@ -1,0 +1,131 @@
+.navbar {
+    height: var(--nav-height);
+    background-color: var(--bg);
+    padding: 0 1rem;
+    border-bottom: var(--border);
+}
+
+.navbar-nav {
+    max-width: 100%;
+    /* make element as wide as parent (at-most) */
+    height: 100%;
+    /* make element as wide as parent (exactly) */
+    display: flex;
+    /* align children horizontally*/
+    justify-content: flex-end;
+    /* align to the right */
+}
+
+.nav-item {
+    width: calc(var(--nav-height) * 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-button {
+    --button-size: calc(var(--nav-height) * 0.5);
+
+    width: var(--button-size);
+    height: var(--button-size);
+    background-color: var(--bg-accent3);
+    border-radius: 50%;
+    padding: calc(var(--nav-height)/12);
+    margin: calc(var(--nav-height)/30);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: filter 200ms;
+}
+
+.icon-button:hover {
+    /* filter: brightness(1.2); */
+    /* filter: hue-rotate(-150deg) brightness(1.2); */
+    filter: opacity(50%);
+}
+
+.icon-button svg {
+    fill: var(--text-color);
+    width: var(--button-size);
+    height: var(--button-size);
+
+}
+
+.dropdown {
+    position: absolute;
+    top: calc(var(--nav-height) - 2px);
+    /* top: 58px; */
+    width: 300px;
+    /* play with this */
+    transform: translateX(-45%);
+    background-color: var(--bg);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    overflow: hidden;
+
+    transition: height var(--speed) ease;
+
+}
+
+.menu-item {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border-radius: var(--border-radius);
+    transition: background var(--speed);
+    padding: 0.5rem;
+    display: grid;
+    grid-template-columns: 2fr 8fr 1fr;
+}
+
+.menu-item:hover {
+    filter: brightness(0.7);
+    background-color: hsl(228, 3%, 33%);
+}
+
+.menu-item .icon-button:hover {
+    filter: none;
+}
+
+.menu-primary-enter {
+    position: absolute;
+    transform: translateX(-110%);
+}
+
+.menu-primary-enter-active {
+    transform: translateX(0%);
+    transition: all var(--speed) ease;
+}
+
+.menu-primary-exit {
+    position: absolute;
+}
+
+.menu-primary-exit-active {
+    transform: translateX(-110%);
+    transition: all var(--speed) ease;
+}
+
+
+.menu-secondary-enter {
+    transform: translateX(110%);
+}
+
+.menu-secondary-enter-active {
+    transform: translateX(0%);
+    transition: all var(--speed) ease;
+}
+
+.menu-secondary-exit {}
+
+.menu-secondary-exit-active {
+    transform: translateX(110%);
+    transition: all var(--speed) ease;
+}
+
+
+a .no-text-dec {
+    color: var(--text-color);
+    text-decoration: none;
+}
