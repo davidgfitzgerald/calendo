@@ -19,11 +19,11 @@ const initialData = {
         },
         "column-2": {
             id: "column-2",
-            title: "To do",
+            title: "Calendar",
             itemIds: ["item-4", "item-5"]
         },
     },
-    columnOrder: ["column-1", "column2"]
+    columnOrder: ["column-1", "column-2"]
 }
 
 
