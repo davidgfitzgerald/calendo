@@ -1,19 +1,27 @@
 import { PropsWithChildren } from "react"
 
+export type ItemId = string
+export type ColumnId = string
 
-export interface GroupType {
-    title: string,
-    items: Array<ItemType>
+export interface Item {
+    id: ItemId,
+    content: string,
 }
 
-export type ItemType = string
+export interface Column {
+    id: ColumnId,
+    title: string,
+    itemIds: Array<ItemId>
+    
+}
+
+export interface Data {
+    items: Record<ItemId, Item>
+    columns: Record<ColumnId, Column>
+    columnOrder: Array<ColumnId>
+}
 
 export interface DragNDropProps extends PropsWithChildren {
-    data: Array<GroupType>
+    data: Data
 }
 
-
-export interface ItemCoords {
-    groupIndex: number; 
-    itemIndex: number; 
-}
