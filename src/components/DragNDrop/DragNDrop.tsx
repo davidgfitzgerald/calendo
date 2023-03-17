@@ -10,7 +10,7 @@ export function DND({ data }: DNDProps): JSX.Element {
         data.columnOrder.map((columnId) => {
           const column = data.columns[columnId]
           const items = column.itemIds.map((itemId) => data.items[itemId])
-          return <DNDGroup column={column} items={items}></DNDGroup>
+          return <DNDGroup column={column} items={items} key={columnId}></DNDGroup>
         })
       }
     </div>
@@ -23,7 +23,7 @@ export function DNDGroup({ column, items }: DNDGroupProps): JSX.Element {
     <div className="dnd-group" key={column.id}>
       <div className="dnd-group-title">{column.title}</div>
       {items.map((item) => {
-        return <DNDItem item={item}></DNDItem>;
+        return <DNDItem item={item} key={item.id}></DNDItem>;
       })}
     </div>
   );
