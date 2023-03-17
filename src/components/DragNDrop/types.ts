@@ -12,7 +12,7 @@ export interface Column {
     id: ColumnId,
     title: string,
     itemIds: ItemId[]
-    
+
 }
 
 export interface Data {
@@ -27,7 +27,7 @@ export interface DNDProps extends PropsWithChildren {
 
 export interface DNDGroupProps extends PropsWithChildren {
     column: Column,
-    items: Item[]
+    items: Item[],
 }
 
 export interface DNDItemProps extends PropsWithChildren {
