@@ -11,17 +11,26 @@ export interface Item {
 export interface Column {
     id: ColumnId,
     title: string,
-    itemIds: Array<ItemId>
+    itemIds: ItemId[]
     
 }
 
 export interface Data {
     items: Record<ItemId, Item>
     columns: Record<ColumnId, Column>
-    columnOrder: Array<ColumnId>
+    columnOrder: ColumnId[]
 }
 
-export interface DragNDropProps extends PropsWithChildren {
+export interface DNDProps extends PropsWithChildren {
     data: Data
+}
+
+export interface DNDGroupProps extends PropsWithChildren {
+    column: Column,
+    items: Item[]
+}
+
+export interface DNDItemProps extends PropsWithChildren {
+    item: Item
 }
 

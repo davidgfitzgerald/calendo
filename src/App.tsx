@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css'
-import DragNDrop from './components/DragNDrop/DragNDrop'
+import { DND } from './components/DragNDrop/DragNDrop'
 
 
 const initialData = {
@@ -30,7 +30,7 @@ const initialData = {
 export function App() {
     return (
         <div className="App">
-            <DragNDrop data={initialData}/>
+            <DND data={initialData}/>
         </div>
     )
 }
