@@ -1,22 +1,22 @@
 import { PropsWithChildren } from "react"
 
-export type ItemId = string
+export type TaskId = string
 export type ColumnId = string
 
-export interface Item {
-    id: ItemId,
+export interface Task {
+    id: TaskId,
     content: string,
 }
 
 export interface Column {
     id: ColumnId,
     title: string,
-    itemIds: Array<ItemId>
+    taskIds: Array<TaskId>
     
 }
 
 export interface Data {
-    items: Record<ItemId, Item>
+    tasks: Record<TaskId, Task>
     columns: Record<ColumnId, Column>
     columnOrder: Array<ColumnId>
 }

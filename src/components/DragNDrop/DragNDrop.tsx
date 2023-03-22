@@ -2,28 +2,18 @@ import React from 'react';
 import { DragNDropProps } from "./types";
 import './DragNDrop.css';
 
-function DragNDrop({ data }: DragNDropProps) {
-  const { items, columns, columnOrder } = data
 
-  return (
+export class DragNDrop extends React.Component<DragNDropProps> {
+  state = this.props.data;
 
-    <div className="drag-n-drop">
-      {
-        columnOrder.map((columnId) => {
-          const column = columns[columnId]
+  render() {
+      return this.state.columnOrder.map((columnId) => {
+          const column = this.state.columns[columnId];
+          const tasks = column.taskIds.map(taskId => this.state.tasks[taskId])
+
           return (
-            <div className="dnd-group" key={columnId}>
-              <div className="dnd-group-title">{column.title}</div>
-              {column.itemIds.map((itemId) => {
-                const item = items[itemId]
-                return <div className="dnd-item">{item.content}</div>
-              })}
-            </div>
-          )
-        })
-      }
-    </div>
-  );
+            <div key={columnId}>{column.title}</div>
+            )
+      })
+  }
 }
-
-export default DragNDrop;
