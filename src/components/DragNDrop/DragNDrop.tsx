@@ -26,7 +26,7 @@ export class DragNDrop extends React.Component<DragNDropProps, DragAndDropState>
     }
     
     this.setState((prevState) => {
-      let newState = JSON.parse(JSON.stringify(prevState))
+      let newState = JSON.parse(JSON.stringify(prevState))  // TODO, see if there is better way to copy/dereference object
       newState.columns[source.droppableId].taskIds.splice(source.index, 1)
       newState.columns[destination.droppableId].taskIds.splice(destination.index, 0, draggableId)
       return newState

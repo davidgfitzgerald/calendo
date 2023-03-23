@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { ColumnProps } from "./types";
 import './DragNDrop.css';
 // import { Droppable } from 'react-beautiful-dnd';
@@ -13,9 +13,16 @@ const Container = styled.div`
 `;
 const Title = styled.h3`
   padding: 8px;
-  `;
-const TaskList = styled.div`
+`;
+
+interface TaskListProps extends PropsWithChildren {
+  isDraggingOver: boolean
+}
+
+const TaskList = styled.div<TaskListProps>`
   padding: 8px;
+  transition: background-color 0.3s ease;
+  background-color: ${props => (props.isDraggingOver ? "lightgrey" : "white")}
 `;
 
 
@@ -26,12 +33,13 @@ export default class Column extends React.Component<ColumnProps> {
       <Container>
         <Title>{this.props.column.title}</Title>
         <Droppable droppableId={this.props.column.id}>
-          {(provided) => (
+          {(provided, snapshot) => (
             <TaskList
-              ref={provided.innerRef}  // innerRef had a type error
+              ref={provided.innerRef}
               {...provided.droppableProps}
+              isDraggingOver={snapshot.isDraggingOver}
             >
-              {this.props.tasks.map((task, index) => <Task key={task.id} task={task} index={index}/>)}
+              {this.props.tasks.map((task, index) => <Task key={task.id} task={task} index={index} />)}
               {provided.placeholder}
             </TaskList>
           )}
