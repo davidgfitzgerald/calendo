@@ -1,7 +1,8 @@
 import React from 'react';
 import { ColumnProps } from "./types";
 import './DragNDrop.css';
-import { Droppable } from 'react-beautiful-dnd';
+// import { Droppable } from 'react-beautiful-dnd';
+import { StrictModeDroppable as Droppable } from '../../utils/StrictModeDroppable';
 import styled from 'styled-components';
 import Task from './Task';
 
@@ -30,7 +31,7 @@ export default class Column extends React.Component<ColumnProps> {
               ref={provided.innerRef}  // innerRef had a type error
               {...provided.droppableProps}
             >
-              {this.props.tasks.map(task => <Task key={task.id} task={task} />)}
+              {this.props.tasks.map((task, index) => <Task key={task.id} task={task} index={index}/>)}
               {provided.placeholder}
             </TaskList>
           )}

@@ -14,12 +14,6 @@ export interface Column {
     taskIds: TaskId[]
 }
 
-export interface Data {
-    tasks: Record<TaskId, Task>
-    columns: Record<ColumnId, Column>
-    columnOrder: ColumnId[]
-}
-
 export interface ColumnProps extends PropsWithChildren {
     column: Column
     tasks: Task[]
@@ -27,9 +21,16 @@ export interface ColumnProps extends PropsWithChildren {
 
 export interface TaskProps extends PropsWithChildren {
     task: Task
+    index: number
 }
 
 export interface DragNDropProps extends PropsWithChildren {
-    data: Data
+    data: DragAndDropState
+}
+
+export interface DragAndDropState {
+    tasks: Record<TaskId, Task>
+    columns: Record<ColumnId, Column>
+    columnOrder: ColumnId[]
 }
 

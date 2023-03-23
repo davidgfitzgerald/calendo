@@ -1,15 +1,37 @@
 import React from 'react';
-import { DragNDropProps } from "./types";
+import { DragNDropProps, DragAndDropState } from "./types";
 import './DragNDrop.css';
 import Column from './Column';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 
 
-export class DragNDrop extends React.Component<DragNDropProps, {}> {
-  state = this.props.data;
+export class DragNDrop extends React.Component<DragNDropProps, DragAndDropState> {
+  constructor(props: DragNDropProps) {
+    super(props)
+    this.state = this.props.data
+  }
 
-  onDragEnd = result => {
-    // TODO re-order our column
+  onDragEnd = (result: DropResult) => {
+    const {source, destination, draggableId} = result
+  
+    if (!destination) {
+      return  // destination may be null or undefined
+    }
+
+    if (
+      source.droppableId === destination.droppableId && 
+      source.index == destination.index
+    ) {
+      return  // item dropped back at start 
+    }
+    
+    this.setState((prevState) => {
+      let newState = JSON.parse(JSON.stringify(prevState))
+      newState.columns[source.droppableId].taskIds.splice(source.index, 1)
+      newState.columns[destination.droppableId].taskIds.splice(destination.index, 0, draggableId)
+      return newState
+    }
+    )
   }
 
   render() {
