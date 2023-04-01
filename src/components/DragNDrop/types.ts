@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react"
+import { HTMLAttributes, PropsWithChildren } from "react"
 
 export type TaskId = string
 export type ColumnId = string
@@ -17,11 +17,12 @@ export interface Column {
 export interface ColumnProps extends PropsWithChildren {
     column: Column
     tasks: Task[]
+    droppableId: ColumnId
 }
 
 export interface TaskProps extends PropsWithChildren {
     task: Task
-    index: number
+    draggableId: TaskId
 }
 
 export interface DragNDropProps extends PropsWithChildren {

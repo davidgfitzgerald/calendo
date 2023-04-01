@@ -1,46 +1,22 @@
-import React, { PropsWithChildren } from "react";
+import React from "react";
 import { TaskProps } from "./types";
-import styled from 'styled-components';
-import { Draggable } from "react-beautiful-dnd";
+import { useDraggable } from '@dnd-kit/core';
+import { CSS } from '@dnd-kit/utilities';
 
-interface ContainerProps extends PropsWithChildren {
-    isDragging: boolean
-}
 
-const Container = styled.div<ContainerProps>`
-    border: 1px solid lightgrey;
-    border-radius: 2px;
-    padding: 8px;
-    margin-top: 8px;
-    background-color: ${props => (props.isDragging ? "lightgreen" : "white")};
-    display: flex;
-`;
+export default function Task(props: TaskProps) {
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: props.draggableId,
+  });
 
-const Handle = styled.div`
-    width: 20px;
-    height: 20px;
-    background-color: orange;
-    border-radius: 4px;
-    margin-right: 8px;
-`;
+  const style = {
+    transform: CSS.Translate.toString(transform),
+  }
 
-export default class Task extends React.Component<TaskProps, {}> {
-    render() {
-        return (
-            <Draggable draggableId={this.props.task.id} index={this.props.index}>
-                {(provided, snapshot) => (
-                    <Container
-                        {...provided.draggableProps}
-                        ref={provided.innerRef}
-                        isDragging={snapshot.isDragging}
-                    >
-                        <Handle
-                            {...provided.dragHandleProps}  // can make small part drag entirety
-                        />
-                        {this.props.task.content}
-                    </Container>
-                )}
-            </Draggable>
-        );
-    }
+  return (
+    <div className="dnd-item" ref={setNodeRef} style={style} {...listeners} {...attributes}>
+      <h2>{props.task.id}</h2>
+      {props.children}
+    </div>
+  );
 }

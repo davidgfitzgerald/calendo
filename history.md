@@ -18,3 +18,16 @@ Watched this video [Drag And Drop With React Hooks From Scratch](https://www.you
 Read some of this article [5 React Design Patterns You Should Know](https://javascript.plainenglish.io/5-react-design-patterns-you-should-know-629030e2e2c7)
 - The higher-order component pattern seems very useful for composing components, very similar to a decorator wrapping a function.
 - The example it gives is: `const TodoListWithLoading = withLoading(TodoList);` which wraps a `TodoList` component with loading functionality
+
+23/03/23
+
+Followed a tutorial to add the `react-beautiful-dnd` library to the project. Which it transpires is unmaintained. I watched a video by Theo on YT, who greatly emphasised
+that this library should not be used any more since it hasn't been updated since 2021. He suggested using `dnd-kit` as a modern alternative.
+
+26/03/23
+
+Just sitting down and implementing the `dnd-kit` library.
+
+1/04/23
+
+Sitting down again to carry on implementing `dnd-kit`.

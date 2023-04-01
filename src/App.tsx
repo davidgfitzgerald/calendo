@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css'
-import {DragNDrop} from './components/DragNDrop/DragNDrop'
+import DragNDrop from './components/DragNDrop/DragNDrop'
 
 
 const initialData = {
