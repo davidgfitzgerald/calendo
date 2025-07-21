@@ -52,7 +52,7 @@
     "@types/react-transition-group": "^4.4.5",
     "@types/styled-components": "^5.1.26",
     "@types/uuid": "^8.3.4",
-    "cypress": "^10.9.0",
+    "cypress": "^14.5.2",
     "react-scripts": "^5.0.1"
   },
   "overrides": {
